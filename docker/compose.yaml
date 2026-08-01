@@ -1,0 +1,24 @@
+services:
+  vohive:
+    # 从仓库根目录的原版二进制构建，不依赖已经下架的 Docker Hub 镜像。
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: vohive-backup:v1.5.5
+    container_name: vohive
+    restart: unless-stopped
+
+    # VoHive 需要直接访问模组、QMI 和宿主网络。
+    network_mode: host
+    privileged: true
+
+    environment:
+      TZ: Asia/Shanghai
+      CONFIG_PATH: /app/config/config.yaml
+
+    volumes:
+      - ./config:/app/config
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - /dev:/dev
+

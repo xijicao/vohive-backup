@@ -1,0 +1,19 @@
+[Unit]
+Description=VoHive modem management service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/vohive
+ExecStart=/opt/vohive/vohive -c /opt/vohive/config/config.yaml
+Restart=on-failure
+RestartSec=5
+
+# 需要访问串口/QMI 设备，因此默认以 root 运行。
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
+
