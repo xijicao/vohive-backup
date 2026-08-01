@@ -6,8 +6,8 @@ FROM alpine:3.22
 # buildx 会自动传入 amd64 或 arm64，用来选择对应的原版文件。
 ARG TARGETARCH
 
-# ca-certificates 用于 HTTPS；tzdata 用于时区；libqmi-utils 便于排查 QMI 模组。
-RUN apk add --no-cache ca-certificates tzdata libqmi-utils \
+# ca-certificates 用于 HTTPS；tzdata 用于时区；qmi-utils 便于排查 QMI 模组。
+RUN apk add --no-cache ca-certificates tzdata qmi-utils \
     && mkdir -p /app/config /app/data /app/logs
 
 COPY linux/vohive_v1.5.5_linux_${TARGETARCH} /app/vohive
@@ -21,4 +21,3 @@ ENV TZ=Asia/Shanghai \
 EXPOSE 7575
 
 ENTRYPOINT ["/app/vohive"]
-
